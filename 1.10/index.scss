@@ -1,0 +1,156 @@
+@mixin auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@mixin percentage {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin fullPage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@mixin widthAuto($left) {
+  position: absolute;
+  left: $left;
+  right: 0;
+}
+
+@mixin centerp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin centerAuto {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+@mixin centerTra {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+@mixin centerMar($width,$height) {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -$width/2;
+  margin-top: -$height/2;
+}
+
+@mixin circle {
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -ms-border-radius: 50%;
+}
+
+@mixin borderRadius($radius) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -ms-border-radius: $radius;
+}
+
+$width: 600px;
+$bg: './';
+$row: 15;
+$margin:5px;
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html, body {
+  @include percentage;
+}
+
+body {
+  background:#ffffff url("#{$bg}bigbg.jpg") center/cover;
+  overflow: hidden;
+}
+
+.qipan {
+  width: $width;
+  height: $width;
+  background: rgba(255, 255, 255, 0.8);
+  @include centerTra;
+  .qizi {
+    margin: $margin;
+    width: $width / $row - $margin * 2;
+    height: $width / $row - $margin * 2;
+    float: left;
+    position: relative;
+    z-index: 9999;
+    @include  circle;
+  }
+  .qizi.hei{
+    background-color: #000000;
+  }
+  .qizi.bai{
+    background-color: #ffffff;
+  }
+  i {
+    width: $width - $width/$row;
+    height: 1px;
+    background-color: #333333;
+    position: absolute;
+    left: $width / $row / 2;
+    transform: translate3d(0, -1000px, 0);
+  }
+  b {
+    height: $width - $width/$row;
+    width: 1px;
+    background-color: #333333;
+    position: absolute;
+    top: $width/ $row / 2;
+    transform: translate3d(-1000px, 0, 0);
+  }
+  @for $i from 1 through $row {
+    i:nth-of-type(#{$i}) {
+      top: (2 * $i - 1) * $width / $row / 2;
+      animation: diaoluo 1s   $i*90ms forwards;
+    }
+  }
+  @for $i from 1 through $row {
+    b:nth-of-type(#{$i}) {
+      left: (2 * $i - 1) * $width / $row / 2;
+      animation: fly 1s ease $i*90ms forwards;
+    }
+  }
+
+}
+
+@keyframes diaoluo {
+  0% {
+    transform: translate3d(-1000px, -1000px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translate3d(-1000px, -1000px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
